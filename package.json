@@ -1,6 +1,6 @@
 {
   "name": "ml-pwm",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "The pwm package for Microlattice.js",
   "main": "index.js",
   "supportIC": [
