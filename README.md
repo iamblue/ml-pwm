@@ -10,7 +10,7 @@
 
 ``` js
 
-pwmRegister(
+__pwmRegister(
   pin,      // number
   mode,     // number
   frequency // number
@@ -33,7 +33,7 @@ mode:
 * pwmWrite
 
 ``` js
-pwmWrite(
+__pwmWrite(
   pin,   // number
   value  // number
 )
@@ -43,7 +43,7 @@ pwmWrite(
 * pwmRead
 
 ``` js
-pwmRead(
+__pwmRead(
   pin,   // number
   mode   // 0: value, 1: frequency
 )
@@ -57,16 +57,20 @@ pwmRead(
 
 /* Write example */
 
-pinmux(31, 9);  // set pinmux
-pwmRegister(32, 4, 400000);  // registe pwm
+__pinmux(31, 9);  // set pinmux
+__pwmRegister(32, 4, 400000);  // registe pwm
 
 var t = 0;
-timer(function() {
-  pwmWrite(32, t);  // write signal
-  t++;
-  if (t === 10) {
-    t = 0;
-  }
-}, 10);
 
+function loop() {
+  setTimeout(function() {
+    __pwmWrite(32, t);  // write signal
+    t++;
+    if (t === 10) {
+      t = 0;
+    }
+  }, 20);
+};
+
+loop();
 ```
