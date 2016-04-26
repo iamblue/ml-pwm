@@ -4,7 +4,7 @@
 #include "hal_pwm.h"
 #include "microlattice.h"
 
-DELCARE_HANDLER(pwmRegister) {
+DELCARE_HANDLER(__pwmRegister) {
   uint8_t pin = (int)args_p[0].v_float32;
   uint8_t mode = (int)args_p[1].v_float32;
   uint8_t frequency = (int)args_p[2].v_float32;
@@ -14,15 +14,15 @@ DELCARE_HANDLER(pwmRegister) {
       printf("hal_pwm_init fail");
       return true;
   }
-  if (HAL_PWM_STATUS_OK != hal_pwm_set_frequency(32, 400000, &total_count)) {
+  if (HAL_PWM_STATUS_OK != hal_pwm_set_frequency(pin, frequency, &total_count)) {
       printf("hal_pwm_set_frequency fail");
       return true;
   }
-  if (HAL_PWM_STATUS_OK != hal_pwm_set_duty_cycle(32, 0)) {
+  if (HAL_PWM_STATUS_OK != hal_pwm_set_duty_cycle(pin, 0)) {
       printf("hal_pwm_set_duty_cycle fail");
       return true;
   }
-  if (HAL_PWM_STATUS_OK != hal_pwm_start(32)) {
+  if (HAL_PWM_STATUS_OK != hal_pwm_start(pin)) {
       printf("hal_pwm_start fail");
       return true;
   }
@@ -32,7 +32,7 @@ DELCARE_HANDLER(pwmRegister) {
   return true;
 }
 
-DELCARE_HANDLER(pwmWrite) {
+DELCARE_HANDLER(__pwmWrite) {
   uint8_t pin = (int)args_p[0].v_float32;
   uint8_t value = (int)args_p[1].v_float32;
 
@@ -43,7 +43,7 @@ DELCARE_HANDLER(pwmWrite) {
   return true;
 }
 
-DELCARE_HANDLER(pwmRead) {
+DELCARE_HANDLER(__pwmRead) {
 
   uint8_t pin = (int)args_p[0].v_float32;
   uint8_t mode = (int)args_p[1].v_float32;
@@ -64,7 +64,7 @@ DELCARE_HANDLER(pwmRead) {
 }
 
 void ml_pwm_init(void) {
-  REGISTER_HANDLER(pwmWrite);
-  REGISTER_HANDLER(pwmRead);
-  REGISTER_HANDLER(pwmRegister);
+  REGISTER_HANDLER(__pwmWrite);
+  REGISTER_HANDLER(__pwmRead);
+  REGISTER_HANDLER(__pwmRegister);
 }
