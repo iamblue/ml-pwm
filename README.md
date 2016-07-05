@@ -61,17 +61,13 @@ __pinmux(31, 9);  // set pinmux
 __pwmRegister(32, 4, 400000);  // registe pwm
 
 var t = 0;
-function loop() {
-  setTimeout(functoin() {
-    pwmWrite(32, t);  // write signal
-    t++;
-    if (t === 10) {
-      t = 0;
-    }
-    loop();
-  }, 10);
-};
 
-loop();
+setInterval(function() {
+  pwmWrite(32, t);  // write signal
+  t++;
+  if (t === 10) {
+    t = 0;
+  }
+}, 10);
 
 ```
