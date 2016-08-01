@@ -63,7 +63,7 @@ __pwmRegister(32, 4, 400000);  // registe pwm
 var t = 0;
 
 setInterval(function() {
-  pwmWrite(32, t);  // write signal
+  __pwmWrite(32, t);  // write signal
   t++;
   if (t === 10) {
     t = 0;
