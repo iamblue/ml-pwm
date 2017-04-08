@@ -7,14 +7,21 @@
 DELCARE_HANDLER(__pwmRegister) {
   uint8_t pin = jerry_get_number_value(args_p[0]);
   uint8_t mode = jerry_get_number_value(args_p[1]);
-  uint8_t frequency = jerry_get_number_value(args_p[2]);
+  // uint8_t frequency = (int)jerry_get_number_value(args_p[2]);
+  jerry_size_t value_req_sz = jerry_get_string_size(args_p[2]);
+  jerry_char_t frequency_buffer[value_req_sz];
+  jerry_string_to_char_buffer (args_p[2], frequency_buffer, value_req_sz);
+  frequency_buffer[value_req_sz] = '\0';
+
+  int f = atoi(frequency_buffer);
+
   uint32_t total_count = 0;
 
   if (HAL_PWM_STATUS_OK != hal_pwm_init(HAL_PWM_CLOCK_40MHZ)) {
       printf("hal_pwm_init fail");
       return true;
   }
-  if (HAL_PWM_STATUS_OK != hal_pwm_set_frequency(pin, frequency, &total_count)) {
+  if (HAL_PWM_STATUS_OK != hal_pwm_set_frequency(pin, f, &total_count)) {
       printf("hal_pwm_set_frequency fail");
       return true;
   }
@@ -34,8 +41,8 @@ DELCARE_HANDLER(__pwmWrite) {
   uint8_t pin = jerry_get_number_value(args_p[0]);
   uint8_t value = jerry_get_number_value(args_p[1]);
 
-  printf("pin: %d\n", pin);
-  printf("value: %d\n", value);
+  // printf("pin: %d\n", pin);
+  // printf("value: %d\n", value);
   hal_pwm_set_duty_cycle(pin, value);
 
   return jerry_create_boolean(true);
